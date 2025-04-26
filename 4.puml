@@ -1,0 +1,35 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+SHOW_PERSON_PORTRAIT()
+LAYOUT_LEFT_RIGHT()
+
+
+Person(user, "Usuário", "Usuário que interage com o sistema")
+ContainerDb_Ext(eventdata, "Dados de eventos", "XES, CSV ou XLS", "Arquivo externo a ser importado")
+
+System_Boundary(system, "Sophia Software System") {
+    Container(frontend, "Frontend", "Web applications", "Aplicação web em que o usuario interage e visualiza os resultados")
+    Container(backend, "Backend", "Python", "Módulos que executam as solicitações do usuário, acessa o banco de dados e devolve os resultados para o frontend")
+    ContainerDb(armazenamento, "Banco de dados", "Database Schema", "Armazena o arquivo importado")
+    BiRel(frontend, backend, "Usa/Entrega")
+}
+
+Rel(user, frontend, "Usa")
+Rel(backend, armazenamento, "Lê e escreve em")
+Rel_L(backend, eventdata, "Lê o arquivo")
+
+SHOW_LEGEND()
+footer drawn with PlantUML v. %version() and C4-PlantUML v. C4Version()
+@enduml
+
+
+#Rel(user, system, "Usa")
+#Rel(system, frontend, "Usa")
+#Rel(frontend, backend, "Usa")
+#Rel(backend, armazenamento, "Lê e escreve em")
+
+
+#(frontend) .> (backend)
+#(backend) .> (frontend)
+
+#https://www.plantuml.com/plantuml/umla/NLDBRjj03Dth5Ao10ZQGs9kkkih7oWTGOiEoatGbK18J3ohDAFEHanGzJD55WMwBdi0NAsarZXsjEEGZtmEfT-GyMX_gAlgWT565ac3fVUC-ZqOMLyC7vPSX3uviORGdxOU5gKTDXLfw3fqlAvMFJZyTJYMrk4f6DJfFbbFPANUWqcI7ZSnFBoQtsJIUfPFhR3gPpMV7b_F-84gElqmMyoo9p-RPxFByGdBHbAmpkY-y1z1RkB3-OPNfxSJm60YKPYfy861HOC0ffgwnDuYsrECyYvzydrgMNg97dZ36qZWe2JP9usJgNPmUm6bw0oR0NP9AwjW-1jKQe2Vcq0OGM0oekZ7MymGcYT9duSjEJD0bskU-sxovDpNDKY6avjwlq19qmDu0laN0trPT_zvkjbfopzd_KBXlAGTicaeLw9NHRgDdyrp_MlyqiE8wrPiL60Wke2nakmo2Ld6kKYy8ne4b5ogHx5ZpFdsEnTUE_KIYZdpwx9T6ItIr_bE6oZWXuZrG4JpMW0wSOItAYvg_vA0K4TrP3W0BSew98KTT6DbpATn07BQcQcbV4pHe1VswYVSQntaVROqlfB6MSudMlS4YT8mUStG4QR6a6hlpTKrW0BjBxjrEE4xKZAgT4xnjO-5m56jlwG4P-psA1DZzZ5kueAGgfMtdUwd9-ZSGa2iijGHKT_WiUUlO_JC5lPNBqCuoINmUNu_P5VV6UB9GiYyrhDYOy6ewQ8VmiINh59jc0AXBO4lkLFbvyrgEZfYO3VaF

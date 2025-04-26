@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title "Sophia Software System"
+
+SHOW_PERSON_PORTRAIT()
+LAYOUT_LEFT_RIGHT()
+
+Person(user, "Usuário", "Usuário que interage com o sistema")
+System(system, "Sophia Software System", "Ferramenta de mineração de processos com as funcionalidades de tratamento de dados, linguagem natural e descoberta de processos")
+Container(frontend, "Frontend", "Web applications", "Aplicação web em que o usuario interage e visualiza os resultados")
+Container(backend, "Backend", "Python", "Módulos que executam as solicitações do usuário, acessa o banco de dados e devolve os resultados para o frontend")
+ContainerDb(armazenamento, "Banco de dados", "Database Schema", "Armazena o arquivo importado")
+
+Rel(user, system, "Usa")
+Rel(system, frontend, "Usa")
+Rel(system, backend, "Usa")
+Rel(backend, armazenamento, "Lê e escreve em")
+
+@enduml
+

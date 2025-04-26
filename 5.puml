@@ -1,0 +1,58 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_LEFT_RIGHT()
+SHOW_PERSON_PORTRAIT()
+
+
+Person(user, "Usuário", "Usuário que interage com o sistema")
+
+System_Boundary(system, "Sophia Software System") {
+    Container_Boundary(tratamento, "Módulos para tratamento dos dados"){
+        Container(principal, "Principal", "Web aplication", "Módulo do frontend que permite ao usuário (i) criar um novo estudo ou (ii) editar estudos existentes")
+        Component(criar_editar, "Criar/Editar", "Python", "Realiza a importação de um arquivo CSV, XLS ou XES para o BD ou recupera dados salvos")
+
+        Container(def_processo, "Definição do processo", "Web aplication", "Modulo para entrada de uma string que define o processo a ser analisado")
+        Component(ling_nat, "Linguagem natural", "Python", "Modulo de linguagem natural para varredura do dataset e identificação das variáveis sugeridas")
+
+        Container(visualiza, "Visualização", "Web aplication", "Visualização da tabela para transformação, tratamento e mapeamento")
+        Component(mapeamento, "Mapeamento", "Python", "Modulo que realiza a transformação, tratamento e mapemaento das variáveis a serem analisadas")
+        Component(conversao, "Conversão", "Python", "Modulo que converte o dado em XES")
+    
+        ContainerDb(armazenamento, "Banco de dados", "Database Schema", "Armazena o arquivo importado")
+    }
+
+    Container_Boundary(mineracao, "Módulos para descoberta e análise de processos"){
+        Container(mapa, "Mapa do processo", "Web aplication", "Módulo dde vizualização do processo descoberto")
+        Component(descoberta, "Descoberta", "PM4Py", "Descoberta de processos")
+        Component(performance, "Performance", "PM4Py", "Análise da performance")
+    }
+
+}
+
+ComponentDb_Ext(eventdata, "Dados de eventos", "XES, CSV ou XLS", "Arquivo externo a ser importado")
+
+Rel_R(criar_editar, eventdata, "Lê o arquivo")
+
+Rel_R(user, principal, "usa")
+Rel(principal, criar_editar, "Usa")
+BiRel(criar_editar, armazenamento, "Le e escreve em")
+
+Rel(def_processo, ling_nat, "usa")
+Rel(visualiza, mapeamento, "usa")
+Rel(mapeamento, conversao, "usa")
+
+Rel(conversao, mapa, "usa")
+Rel(mapa, descoberta, "usa")
+Rel(mapa, performance, "usa")
+
+SHOW_LEGEND()
+footer drawn with PlantUML v. %version() and C4-PlantUML v. C4Version()
+@enduml
+
+
+
+#https://www.plantuml.com/plantuml/umla/jLRDQYD74BxhAIg2W0HUwxAddDO_8Wd8Qs6jlNiJfUcIrJ3JFTi_ya_8mvWS0hdc4VHYgPhsJ4lsY9pM6D7r__LNDJNpoGTq8LRbu2TjYZ8gWaq8jVzbCd7uS7glmoQkeYTNM1F8XDF2LfEwH2Cn7tnGfLvDBZv-c8lgzcesgT07SgnQNd04QaFkjFv1-QlQ6ev9-GUBtww_BkVJcyNrv-Ny-kRBpTdlNqRZmM0m9-Uj6KcL4nZU-hXxSTeEzyxmFH9emudnde0XW0MlkL25GywmU9BZyjn6ez0zZNmZS_p2rXkDiB3hy82E83aEn_370FYlOo271eS1AmPjEVngzw-AfVLGeqF89b2iKyY_mt7AT91jL3lcKjTOSevvUvRxVAKLO5tg0eEsPfXBS4POkuPYrLos9bVfG80MOal2I8-XS1eTn0gCtLeW7o97siWsDfBIWQr9wu4UXIBEoJ0pohOheoRLCiKmaWiH9zD656Jpfx1966y8I_sCWA0vrWNS_RtxYo6Ju43tFMg6Sh6uEu5liuM0-JPT9Ceid5-Amb4H-KQOI0EFvTOAg1xk5AsNjRC5UIyjkAIrDlgre8NMSeHCArocqcI2GuK99O8FJflxXbebAGboCc0pEK33r_GCi9UjaiEN1WENcV4nyY1Mm79qM6QwCWefNBvrJD2sw1mfbkL62WDw2a2W5TVHQrsq_A8NLxrxsP9cqk8zEQtm26zRxMFJ9aPmrvubKJzNsQSj1W5NL68twyQlhQkI-MH_-0agh2a9lLHbix3H2RqiIKDSDr__NxP25jvoanf8LTT2F3Bnrcp9URGoxkdCLOxYIkw1GEef2rJ9PBzcVj-2ozK86VapcUxovsWAcOJNPI7pZ4mpUe95iQ4AHNNs6WIsUvZISvP7yS_1iNrLYOW5lbzNYdnXLyHfW03DxeMP8TQsOtziUJ7BcFg6_KzSx_hYl5lzV31HEJPZwH-O35KOweIcCLSVvq_30_N17NhprUHaY9XyaXHPEiXurd62i1UHAUV_BkVbQZbz32FQybbX0Yez5J2DChMNv-D4LY7OACimjJVrb1u3ETCkc_qE3sweVBEDz-lCTl_aqMZTqyjo_qKJFR9HR7lQDpl-jl4vr-yBlftS6G41K-uO2L3LbZtSpdadvkhxY-XW4MIFVNL-99D7oqPMopmUXeiYZrIVyN00aZLzVyoclqu_Nux6WxMrWHmeXmy67dJOGFi90zjJ-5cgQsj6Oq2Z87_WY9N5kzOy-4H6nQhy3m00
+
+

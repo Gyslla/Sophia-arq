@@ -1,0 +1,26 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_LEFT_RIGHT()
+
+Container_Boundary(mineracao, "Módulos para mineração dos processos"){
+    Container(mapa, "Mapa do processo", "Web aplication", "Módulo dde vizualização do processo descoberto")
+    Component(descoberta, "Descoberta", "PM4Py", "Descoberta de processos")
+    Component(performance, "Performance", "PM4Py", "Análise da performance")
+    note right of descoberta
+        A left note can also
+        be on several lines
+    end note
+}
+
+Rel(conversao, mapa, "usa")
+Rel(mapa, descoberta, "usa")
+Rel(mapa, performance, "usa")
+
+SHOW_LEGEND()
+footer drawn with PlantUML v. %version() and C4-PlantUML v. C4Version()
+@enduml
+
+
+
